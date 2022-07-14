@@ -2,6 +2,7 @@ package com.iamageo.brazilian_toolkit_library
 
 import kotlin.math.abs
 
+/*** SECTION FOR CPF ***/
 fun String.isCpf(charactersToIgnore: List<Char> = listOf('.', '-')): Boolean {
     val cleanCpf = this.filterNot { it in charactersToIgnore }
     if (cleanCpf.containsInvalidCPFChars() || cleanCpf.isInvalidCpfSize() || cleanCpf.isBlacklistedCpf()) return false
@@ -64,3 +65,53 @@ private val blacklistedCpfs = listOf(
     "88888888888",
     "99999999999"
 )
+
+/*** SECTION FOR CNPJ ***/
+fun String.isCnpj(charactersToIgnore: List<Char> = listOf('.', '-', '/')): Boolean {
+    val cleanCnpj = this.filterNot { it in charactersToIgnore }
+    if (cleanCnpj.containsInvalidCNPJChars() || cleanCnpj.isInvalidCNPJSize()) return false
+    return cleanCnpj.hasValidVerificationDigitsCnpj()
+}
+
+fun Long.isCnpj() : Boolean {
+    val absNumber = abs(this)
+    return absNumber.toString().isCnpj()
+}
+
+private fun String.containsInvalidCNPJChars() = this.any { !it.isDigit() }
+private fun String.isInvalidCNPJSize() = this.length != 14
+
+private fun String.hasValidVerificationDigitsCnpj(): Boolean {
+    val firstTwelveDigits = substring(0..11)
+    val digits = substring(12..13)
+
+    return firstTwelveDigits.calculateDigitsCnpj() == digits
+}
+
+private fun String.calculateDigitsCnpj(): String {
+    val numbers = map { it.toString().toInt() }
+    val firstVerificationDigit = numbers.calculateFirstVerificationDigitCnpj()
+    val secondDigit = numbers.calculateSecondVerificationDigitCnpj(firstVerificationDigit)
+
+    return "$firstVerificationDigit$secondDigit"
+}
+
+private fun List<Int>.calculateFirstVerificationDigitCnpj(): Int {
+
+    val firstTwelveDigits = this
+    val weights = (5 downTo 2) + (9 downTo 2)
+    val sum = firstTwelveDigits.withIndex().sumBy { (index, element) -> weights[index] * element }
+
+    val remainder = sum % 11
+    return if(remainder < 2) 0 else 11 - remainder
+}
+
+private fun List<Int>.calculateSecondVerificationDigitCnpj(firstVerificationDigit: Int): Int {
+
+    val firstThirteenDigits = this + firstVerificationDigit
+    val weights = (6 downTo 2) + (9 downTo 2)
+    val sum = firstThirteenDigits.withIndex().sumBy { (index, element) -> weights[index] * element }
+
+    val remainder = sum % 11
+    return if (remainder < 2) 0 else 11 - remainder
+}
