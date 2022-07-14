@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">brazilian-toolkit</string>
-    <string name="cpf">Cpf</string>
+    <string name="cpf">Cpf ou Cnpj</string>
     <string name="button_verify_title">Verify</string>
 </resources>
