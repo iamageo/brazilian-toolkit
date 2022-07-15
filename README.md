@@ -12,9 +12,52 @@ Utils library for Brazilian specific businesses.
     <img alt="stars" src="https://img.shields.io/github/stars/iamageo/brazilian-toolkit?style=social"/>
 </p>
 
+## Including in your project
 
 
-</p>
+### Gradle
+Add below codes to your **root** `build.gradle` file (not your module build.gradle file).
+```gradle
+allprojects {
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
+And add a dependency code to your **module**'s `build.gradle` file.
+```gradle
+dependencies {
+    
+}
+```
+
+## Methods
+| Function | Description | Status |
+| :---------------: | :---------------: | :---------------: | 
+| isCpf() |  Return true if `CPF` is valid | ✅ | 
+| isCnpj() |  Return true if `CNPJ` is valid | ✅ |
+| getAllStates() |  Return list of all brazilian states | 🚧 |
+| getAllCities() |  Return list of all cities based on state | 🚧 |
+
+
+
+## Basic usage for CPF
+```kotlin
+"12345678911".isCpf()
+```
+
+## Basic usage for CNPJ
+
+```kotlin
+"12345678911".isCnpj()
+```
+
+## How to ignore characters
+The characters `.` and `-` are replaced by String (allowing 127,455,799-41, for example), to modify, just use the charactersToIgnore function:
+```kotlin
+"127,455,799/41".isCpf(charactersToIgnore = listOf(',', '/'))
+```
 
 ## License
 ```
