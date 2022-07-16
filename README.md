@@ -13,7 +13,7 @@ Utils library for Brazilian specific businesses.
 </p>
 
 ## Including in your project
-
+[![](https://jitpack.io/v/iamageo/brazilian-toolkit.svg)](https://jitpack.io/#iamageo/brazilian-toolkit)
 
 ### Gradle
 Add below codes to your **root** `build.gradle` file (not your module build.gradle file).
@@ -28,7 +28,7 @@ allprojects {
 And add a dependency code to your **module**'s `build.gradle` file.
 ```gradle
 dependencies {
-    
+  implementation 'com.github.iamageo:brazilian-toolkit:1.0.0'
 }
 ```
 
