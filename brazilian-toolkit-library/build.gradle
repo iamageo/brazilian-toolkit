@@ -50,7 +50,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = 'com.github.iamageo'
-                artifactId = 'brazilian-toolkit'
+                artifactId = 'brazilian-toolkit-library'
                 version = '1.0.0'
             }
         }
