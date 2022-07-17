@@ -28,7 +28,7 @@ allprojects {
 And add a dependency code to your **module**'s `build.gradle` file.
 ```gradle
 dependencies {
-  implementation 'com.github.iamageo:brazilian-toolkit:1.0.0'
+  implementation 'com.github.iamageo:brazilian-toolkit:1.0.1'
 }
 ```
 
